@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <!--page title now stored in variable-->
+    <ion-title>{{pageTitle}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <!--If there are no items on the list, it displays that text-->
+  <h3 class="no-item" text-center *ngIf="loadItems().length === 0">
+    No item available on the list!
+  </h3>
+
+  <!--creates list-->
+   <ion-list>
+     <!--creates sliding items for each grocery item-->
+     <!--uses array to show items-->
+     <ion-item-sliding *ngFor="let item of loadItems(); let i = index">
+       <ion-item>
+         <ion-label position="stacked">{{item.name}}</ion-label>
+         <ion-label position="stacked">{{item.quantity}}</ion-label>
+       </ion-item>
+       <ion-item-options>
+          <!--edit item button-->
+          <ion-button (click)="editItem(item, i)" color="primary" icon-start>
+              <ion-icon name="create"></ion-icon>
+              Edit
+          </ion-button>
+          <!--share item button-->
+          <ion-button (click)="shareItem(item, i)" color="light" icon-start>
+            <ion-icon name="share"></ion-icon>
+            Share
+          </ion-button>
+         <!--clicking 'Done' button calls removeItem function-->
+         <ion-button (click)="removeItem(item, i)" color="secondary" icon-start>
+           <ion-icon name="trash"></ion-icon>
+           Done
+         </ion-button>
+       </ion-item-options>
+     </ion-item-sliding>
+
+   </ion-list>
+
+   <!--creates add item button-->
+   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+     <!--calls addItem function to allow user to input a new item and add it to the list-->
+    <ion-fab-button (click)="addItem()">
+      <ion-icon name="add-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
